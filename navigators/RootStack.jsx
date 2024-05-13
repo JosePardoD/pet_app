@@ -12,6 +12,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './../pages/Login';
 import Signup from './../pages/Signup';
 import Welcome from './../pages/Welcome';
+
+import BottomTabNavigator from './BottomTabNavigator';
 import { ScreenStackHeaderLeftView } from 'react-native-screens';
 
 
@@ -33,11 +35,12 @@ const RootStack=()=> {
                 paddingLeft:20
             }
         }}
-        initialRouteName="Login"
+        initialRouteName="Home"
         >
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Signup" component={Signup} />        
-          <Stack.Screen name="Welcome" component={Welcome} />        
+          <Stack.Screen name="Welcome" component={Welcome} />
+          <Stack.Screen name="Home" component={BottomTabNavigator} options={{headerShown:false}} />
       </Stack.Navigator>
     </NavigationContainer>
   );

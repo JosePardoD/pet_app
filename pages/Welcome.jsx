@@ -12,7 +12,7 @@ import {
 }from '../components/styles';
 
 
-const Welcome =()=>{
+const Welcome =({navigation})=>{
 
     return(
         <>
@@ -26,9 +26,9 @@ const Welcome =()=>{
                     <StyledFormArea>
                         <Avatar resizeMode='cover' source={require('./../assets/logo.png')}></Avatar>
                         <Line />  
-                        <StyledButton onPress={()=>{}}> 
+                        <StyledButton onPress={()=>{navigation.navigate("Home");}}> 
                             <ButtonText>
-                                Login
+                                Home
                             </ButtonText>
                         </StyledButton>          
                     </StyledFormArea>

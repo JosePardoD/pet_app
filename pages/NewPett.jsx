@@ -32,7 +32,7 @@ const {brand,darkLight,primary} = Colors;
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 
 
-const Signup =({navigation})=>{
+const NewPett =({navigation})=>{
     const [hidePassword, setHidePassword] = useState(true);
     const [show, setShow] = useState(false);
     const [date,setDate]=useState(new Date(2000,0,1));
@@ -60,23 +60,19 @@ const Signup =({navigation})=>{
     const handleSignup = async (credentials, setSubmitting) => {
         
         handleMessage(null);
-        const url = "http://192.168.0.6:3000/api/usuarios/";
+        const url = "http://192.168.0.6:3000/api/mascotas/";
 
-        const preparedCredentials = {
-        ...credentials,
-        Latitud: parseFloat(credentials.Latitud),
-        Longitud: parseFloat(credentials.Longitud)
-        };
+
 
         try {
-            console.log(preparedCredentials)
-            console.log(JSON.stringify(preparedCredentials));
+            console.log(credentials)
+            console.log(JSON.stringify(credentials));
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(preparedCredentials)
+                body: JSON.stringify(credentials)
             });
             console.log(response)
             if (!response.ok) {
@@ -115,14 +111,10 @@ const Signup =({navigation})=>{
                     onChange={onChange}
                     />
                     )}
-                    <Formik initialValues={{Nombre:'',Apellido:'',Cumpleanos:'',Email:'',Contrasena:'',ConfirmarContrasena:'',Latitud:'',Longitud:''}}
+                    <Formik initialValues={{Nombre:'',Especie:'',Raza:'',Genero:'',ImagenURL:''}}
                     onSubmit={(values,{setSubmitting})=>{
-                            values={...values,Cumpleanos: dob};
-                            if(values.Nombre == '' || values.Apellido=='' || values.Cumpleanos == '' || values.Email=='' || values.Contrasena == '' || values.ConfirmarContrasena=='' || values.Latitud == '' || values.Longitud=='') {
+                            if(values.Nombre == '' || values.Especie=='' || values.Raza == '' || values.Genero=='' || values.ImagenURL == '' ) {
                                 handleMessage('por favoirpor favor diligenciar todos los campos');
-                                setSubmitting(false);
-                            }else if (values.Contrasena !== values.ConfirmarContrasena){
-                                handleMessage('Las conttraseñas no coinciden');
                                 setSubmitting(false);
                             }
                             else{
@@ -141,81 +133,41 @@ const Signup =({navigation})=>{
                             value={values.Nombre}
                             />
                             <MyTextInput
-                            label="Apellido"
+                            label="Especie"
                             icon="person"
-                            placeholder= "Apellido"
+                            placeholder= "Especie"
                             placeholderTextColor={darkLight}
-                            onChangeText={handleChange('Apellido')}
-                            onBlur={handleBlur('Apellido')}
-                            value={values.Apellido}
+                            onChangeText={handleChange('Especie')}
+                            onBlur={handleBlur('Especie')}
+                            value={values.Especie}
                             />
                             <MyTextInput
-                            label="Fecha de Nacimiento"
-                            icon="calendar"
-                            placeholder= "YYYY - MM - DD"
-                            placeholderTextColor={darkLight}
-                            onChangeText={handleChange('Cumpleanos')}
-                            onBlur={handleBlur('Cumpleanos')}
-                            value={dob ? dob.toDateString():''}
-                            isDate={true}
-                            editable={false}
-                            showDatePicker={showDatePicker}
-                            />                                                           
-                            <MyTextInput
-                            label="Dirección de Correo"
-                            icon="mail"
-                            placeholder= "ejemplo@gmail.com"
-                            placeholderTextColor={darkLight}
-                            onChangeText={handleChange('Email')}
-                            onBlur={handleBlur('Email')}
-                            value={values.Email}
-                            keyboardType= "email-address"
-                            />
-                                           
-                            <MyTextInput
-                            label="Contraseña"
-                            icon="lock"
-                            placeholder= "* * * * * * * *"
-                            placeholderTextColor={darkLight}
-                            onChangeText={handleChange('Contrasena')}
-                            onBlur={handleBlur('Contrasena')}
-                            value={values.Contrasena}
-                            secureTextEntry={hidePassword}
-                            isPassword={true}
-                            hidePassword={hidePassword}
-                            setHidePassword={setHidePassword}
-                            />
-                            <MyTextInput
-                            label="Confirmar Contraseña"
-                            icon="lock"
-                            placeholder= "* * * * * * * *"
-                            placeholderTextColor={darkLight}
-                            onChangeText={handleChange('ConfirmarContrasena')}
-                            onBlur={handleBlur('ConfirmarContrasena')}
-                            value={values.ConfirmarContrasena}
-                            secureTextEntry={hidePassword}
-                            isPassword={true}
-                            hidePassword={hidePassword}
-                            setHidePassword={setHidePassword}
-                            />
-                            <MyTextInput
-                            label="Latitud"
+                            label="Raza"
                             icon="person"
-                            placeholder= "Latitud"
+                            placeholder= "Raza"
                             placeholderTextColor={darkLight}
-                            onChangeText={handleChange('Latitud')}
-                            onBlur={handleBlur('Latitud')}
-                            value={values.Latitud}
+                            onChangeText={handleChange('Raza')}
+                            onBlur={handleBlur('Raza')}
+                            value={values.Raza}
+                            /> 
+                            <MyTextInput
+                            label="Genero"
+                            icon="person"
+                            placeholder= "Genero"
+                            placeholderTextColor={darkLight}
+                            onChangeText={handleChange('Genero')}
+                            onBlur={handleBlur('Genero')}
+                            value={values.Genero}
                             />
                             <MyTextInput
-                            label="Longitud"
+                            label="ImagenURL"
                             icon="person"
-                            placeholder= "Longitud"
+                            placeholder= "ImagenURL"
                             placeholderTextColor={darkLight}
-                            onChangeText={handleChange('Longitud')}
-                            onBlur={handleBlur('Longitud')}
-                            value={values.Longitud}
-                            />                        
+                            onChangeText={handleChange('ImagenURL')}
+                            onBlur={handleBlur('ImagenURL')}
+                            value={values.ImagenURL}
+                            />                         
                             
                             <MsgBox type={messageType}>{message}</MsgBox> 
 
@@ -267,4 +219,4 @@ const MyTextInput = ({label,icon,isPassword,hidePassword,setHidePassword,isDate,
     );
 };
 
-export default Signup;
+export default NewPett;

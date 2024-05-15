@@ -28,9 +28,15 @@ async function fetchData() {
 
   const [documents, setDocuments] = useState([]);
 
+  const [refreshKey, setRefreshKey] = useState(0);
+
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [refreshKey]);
+
+  const refreshData = () => {
+    setRefreshKey(prevKey => prevKey + 1);
+  };
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity 
@@ -48,7 +54,7 @@ async function fetchData() {
         />
       </TouchableOpacity>
       {documents.map((document) => (
-            <CardPett data={document} />
+            <CardPett data={document} key={document._id} />
       ))}
     </SafeAreaView>
   );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, StyleSheet, View, ActivityIndicator } from 'react-native';
+import { SafeAreaView, StyleSheet, View, ActivityIndicator, Text } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { Picker } from '@react-native-picker/picker';
 
@@ -7,6 +7,7 @@ const Map = () => {
   const [selectedCategory, setSelectedCategory] = useState('Veterinarias');
   const [locations, setLocations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchLocations = async () => {
@@ -17,6 +18,7 @@ const Map = () => {
         setLoading(false);
       } catch (error) {
         console.error(error);
+        setError('Error al cargar ubicaciones');
         setLoading(false);
       }
     };
@@ -43,6 +45,8 @@ const Map = () => {
       <View style={styles.card}>
         {loading ? (
           <ActivityIndicator size="large" color="#0000ff" />
+        ) : error ? (
+          <Text>{error}</Text>
         ) : (
           <MapView
             style={styles.map}
@@ -53,17 +57,21 @@ const Map = () => {
               longitudeDelta: 0.0421,
             }}
           >
-            {filteredLocations.map((location) => (
-              <Marker
-                key={location.id}
-                coordinate={{
-                  latitude: parseFloat(location.latitud),
-                  longitude: parseFloat(location.longitud),
-                }}
-                title={location.nombre}
-                description={location.direccion}
-              />
-            ))}
+            {filteredLocations.length > 0 ? (
+              filteredLocations.map((location) => (
+                <Marker
+                  key={location.id}
+                  coordinate={{
+                    latitude: parseFloat(location.latitud),
+                    longitude: parseFloat(location.longitud),
+                  }}
+                  title={location.nombre}
+                  description={location.direccion}
+                />
+              ))
+            ) : (
+              <Text>No se encontraron ubicaciones para la categoría seleccionada</Text>
+            )}
           </MapView>
         )}
       </View>

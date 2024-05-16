@@ -7,13 +7,20 @@ import CardPett from '../components/CardPett';
 import iconImage from './../assets/gato-negro.png';  // Asegúrate de reemplazar 'path/to/your/icon.png' con la ruta real de la imagen
 import arrowImage from './../assets/flecha-correcta.png';  // Asegúrate de reemplazar 'path/to/your/arrow.png' con la ruta real de la imagen
 import haru from './../assets/haru.jpg'; 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const Home = ({ navigation }) => {  // Añade aquí la prop navigation
+const [userId, setUserId] = useState(null);
 
-const API_URL = "http://192.168.0.6:3000/api/mascotas/";
+
+
 
 async function fetchData() {
   try {
+    const id = await AsyncStorage.getItem('UsuarioID');
+    //const API_URL = "http://192.168.0.6:3000/api/mascotas/";
+    const API_URL = `http://192.168.0.6:3000/api/mascotasdeusuarios/${id}`;
     const res = await fetch(API_URL);
     if (res.ok) {
       const documents = await res.json();

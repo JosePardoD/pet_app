@@ -31,8 +31,8 @@ const {brand,darkLight,primary} = Colors;
 
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 
-import axios from 'axios';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -69,10 +69,13 @@ const Login =({navigation})=>{
 
             const result = await response.json();
             console.log(result)
-            const { token} = result;
+            const { token, UsuarioID} = result;
             console.log(token)
 
-            if (token) {
+            if(token && UsuarioID) {
+                // Guardar token y userId en AsyncStorage
+                await AsyncStorage.setItem('token', token);
+                await AsyncStorage.setItem('UsuarioID',UsuarioID.toString());
                 navigation.navigate("Welcome");
             } else {
                 handleMessage(message);
@@ -179,4 +182,4 @@ const MyTextInput = ({ label, icon, isPassword, hidePassword, setHidePassword, .
     );
 };
 
-export default Login;
+export default Login;

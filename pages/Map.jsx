@@ -39,6 +39,7 @@ const Map = () => {
         >
           <Picker.Item label="Veterinarias" value="Veterinarias" />
           <Picker.Item label="Parques" value="Parques" />
+          <Picker.Item label="Refugios" value="Refugios" />
           {/* Añade más categorías aquí */}
         </Picker>
       </View>
